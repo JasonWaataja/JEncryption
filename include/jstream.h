@@ -13,8 +13,11 @@ class JStream
 		virtual void read(unsigned char*& p, unsigned int& l) = 0;
 		virtual void readReverse(unsigned char*& p, unsigned int& l) = 0;
 
-		virtual bool canRead();
-		virtual bool canReadReverse();
+		virtual bool isReadable();
+		virtual bool isReadableReverse();
+
+		bool hasValidDownstream();
+		bool hasValidUpstream();
 };
 
 #endif

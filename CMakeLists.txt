@@ -4,3 +4,5 @@ project(JLicensor)
 include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
 add_executable(jlic ${SOURCES})
+
+set_property(TARGET jlic PROPERTY CXX_STANDARD 11)

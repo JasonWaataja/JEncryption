@@ -1,8 +1,11 @@
 #include "jstringstream.h"
 
 #include <cstring>
+#include <iostream>
 
-string bytesToString(unsigned char* p, int l)
+using namespace std;
+
+string bytesToString(unsigned char* p, unsigned int l)
 {
 	char* cString = new char[l];
 	memcpy(cString, p, l);
@@ -10,7 +13,7 @@ string bytesToString(unsigned char* p, int l)
 	return s;
 }
 
-void stringToBytes(unsigned char*& p, int& l, const string& s)
+void stringToBytes(unsigned char*& p, unsigned int& l, const string& s)
 {
 	l = s.size() + 1;
 	p = new unsigned char[l];
@@ -40,30 +43,30 @@ JStringStream::JStringStream() : JStringStream(string(), nullptr, nullptr)
 
 string JStringStream::readValue()
 {
-	if (canRead()) {
+	if (hasValidDownstream()) {
 		unsigned char* p;
 		unsigned int l;
 		downstream->read(p, l);
 		value = bytesToString(p, l);
 		delete[] p;
-		return value;
 	} else {
-		return string();
+		value = string();
 	}
+	return value;
 }
 
 string JStringStream::readValueReverse()
 {
-	if (canReadReverse()) {
+	if (hasValidUpstream()) {
 		unsigned char* p;
 		unsigned int l;
-		downstream->readReverse(p, l);
+		upstream->readReverse(p, l);
 		value = bytesToString(p, l);
 		delete[] p;
-		return value;
 	} else {
-		return string();
+		value = string();
 	}
+	return value;
 }
 
 string JStringStream::getValue() const
@@ -86,16 +89,12 @@ void JStringStream::readReverse(unsigned char*& p, unsigned int& l)
 	stringToBytes(p, l, value);
 }
 
-bool JStringStream::canRead()
+bool JStringStream::isReadable()
 {
-	if (!downstream)
-		return false;
-	return downstream->canRead();
+	return true;
 }
 
-bool JStringStream::canReadReverse()
+bool JStringStream::isReadableReverse()
 {
-	if (!upstream)
-		return false;
-	return upstream->canRead();
+	return true;
 }

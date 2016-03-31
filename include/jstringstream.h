@@ -14,11 +14,6 @@ class JStringStream : public JStream
 	private:
 		string value;
 	public:
-		JStream* downstream;
-		JStream* upstream;
-
-
-
 		JStringStream();
 		JStringStream(const string& value);
 		JStringStream(JStream* downstream, JStream* upstream);
@@ -32,8 +27,8 @@ class JStringStream : public JStream
 		void read(unsigned char*& p, unsigned int& l);
 		void readReverse(unsigned char*& p, unsigned int& l);
 
-		bool canRead();
-		bool canReadReverse();
+		bool isReadable();
+		bool isReadableReverse();
 };
 
 #endif
