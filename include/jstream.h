@@ -1,6 +1,8 @@
 #ifndef JSTREAM_H
 #define JSTREAM_H
 
+#include <cstdlib>
+
 class JStream
 {
 	public:
@@ -9,9 +11,10 @@ class JStream
 
 		JStream();
 		JStream(JStream* downstream, JStream* upstream);
+		virtual ~JStream();
 
-		virtual void read(unsigned char*& p, unsigned int& l) = 0;
-		virtual void readReverse(unsigned char*& p, unsigned int& l) = 0;
+		virtual void read(unsigned char*& p, size_t& l) = 0;
+		virtual void readReverse(unsigned char*& p, size_t& l) = 0;
 
 		virtual bool isReadable();
 		virtual bool isReadableReverse();
@@ -19,5 +22,8 @@ class JStream
 		bool hasValidDownstream();
 		bool hasValidUpstream();
 };
+
+void linkJStreams(JStream* downstream, JStream* upstream);
+void linkJStreams(JStream* downstream, JStream* middle, JStream* upstream);
 
 #endif

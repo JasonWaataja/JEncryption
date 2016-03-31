@@ -2,12 +2,14 @@
 #define JSTRINGSTREAM_H
 
 #include <string>
+#include <cstdlib>
+
 #include "jstream.h"
 
 using namespace std;
 
-string bytesToString(unsigned char* p, unsigned int l);
-void stringToBytes(unsigned char*& p, unsigned int& l, const string& s);
+string bytesToString(unsigned char* p, size_t l);
+void stringToBytes(unsigned char*& p, size_t& l, const string& s);
 
 class JStringStream : public JStream
 {
@@ -24,8 +26,8 @@ class JStringStream : public JStream
 		string getValue() const;
 		void setValue(const string& value);
 
-		void read(unsigned char*& p, unsigned int& l);
-		void readReverse(unsigned char*& p, unsigned int& l);
+		void read(unsigned char*& p, size_t& l);
+		void readReverse(unsigned char*& p, size_t& l);
 
 		bool isReadable();
 		bool isReadableReverse();

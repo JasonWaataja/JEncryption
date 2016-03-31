@@ -5,7 +5,7 @@
 
 using namespace std;
 
-string bytesToString(unsigned char* p, unsigned int l)
+string bytesToString(unsigned char* p, size_t l)
 {
 	char* cString = new char[l];
 	memcpy(cString, p, l);
@@ -13,7 +13,7 @@ string bytesToString(unsigned char* p, unsigned int l)
 	return s;
 }
 
-void stringToBytes(unsigned char*& p, unsigned int& l, const string& s)
+void stringToBytes(unsigned char*& p, size_t& l, const string& s)
 {
 	l = s.size() + 1;
 	p = new unsigned char[l];
@@ -45,7 +45,7 @@ string JStringStream::readValue()
 {
 	if (hasValidDownstream()) {
 		unsigned char* p;
-		unsigned int l;
+		size_t l;
 		downstream->read(p, l);
 		value = bytesToString(p, l);
 		delete[] p;
@@ -59,7 +59,7 @@ string JStringStream::readValueReverse()
 {
 	if (hasValidUpstream()) {
 		unsigned char* p;
-		unsigned int l;
+		size_t l;
 		upstream->readReverse(p, l);
 		value = bytesToString(p, l);
 		delete[] p;
@@ -79,12 +79,12 @@ void JStringStream::setValue(const string& value)
 	this->value = value;
 }
 
-void JStringStream::read(unsigned char*& p, unsigned int& l)
+void JStringStream::read(unsigned char*& p, size_t& l)
 {
 	stringToBytes(p, l, value);
 }
 
-void JStringStream::readReverse(unsigned char*& p, unsigned int& l)
+void JStringStream::readReverse(unsigned char*& p, size_t& l)
 {
 	stringToBytes(p, l, value);
 }
