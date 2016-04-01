@@ -3,6 +3,6 @@ project(JLicensor)
 
 include_directories(include)
 file(GLOB SOURCES "src/*.cpp")
-add_executable(jlic ${SOURCES})
+add_executable(jenc ${SOURCES})
 
-set_property(TARGET jlic PROPERTY CXX_STANDARD 11)
+set_property(TARGET jenc PROPERTY CXX_STANDARD 11)

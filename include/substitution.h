@@ -8,6 +8,8 @@
 
 using namespace std;
 
+map<unsigned char, unsigned char> createRandomSubstituionKey();
+
 class Substitution : public JStream
 {
 	private:

@@ -1,5 +1,21 @@
 #include "substitution.h"
 
+#include <random>
+#include <iostream>
+
+using namespace std;
+
+map<unsigned char, unsigned char> createRandomSubstituionKey()
+{
+	map<unsigned char, unsigned char> key;
+	for (int i = 255; i >= 0; i++)
+	{
+		random_device r;
+		
+	}
+	return key;
+}
+
 Substitution::Substitution(JStream* downstream, JStream* upstream, const map<unsigned char, unsigned char>& key) :
 	JStream(downstream, upstream), key(key)
 {
@@ -38,6 +54,7 @@ void Substitution::read(unsigned char*& p, size_t& l)
 				unsigned char unencrypted = p[i];
 				auto encrypted = key.find(unencrypted);
 				if (encrypted != key.end()) {
+					cout << "encrypting" << endl;
 					p[i] = encrypted->second;
 				}
 			}
