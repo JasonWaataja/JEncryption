@@ -51,3 +51,15 @@ void linkJStreams(JStream* downstream, JStream* middle, JStream* upstream)
 	linkJStreams(downstream, middle);
 	linkJStreams(middle, upstream);
 }
+
+void unlinkJStreams(JStream* downstream, JStream* upstream)
+{
+	downstream->upstream = nullptr;
+	upstream->downstream = nullptr;
+}
+
+void unlinkJStreams(JStream* downstream, JStream* middle, JStream* upstream)
+{
+	unlinkJStreams(downstream, middle);
+	unlinkJStreams(middle, upstream);
+}

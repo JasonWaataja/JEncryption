@@ -25,5 +25,7 @@ class JStream
 
 void linkJStreams(JStream* downstream, JStream* upstream);
 void linkJStreams(JStream* downstream, JStream* middle, JStream* upstream);
+void unlinkJStreams(JStream* downstream, JStream* upstream);
+void unlinkJStreams(JStream* downstream, JStream* middle, JStream* upstream);
 
 #endif

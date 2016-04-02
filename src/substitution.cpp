@@ -2,16 +2,24 @@
 
 #include <random>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 map<unsigned char, unsigned char> createRandomSubstituionKey()
 {
 	map<unsigned char, unsigned char> key;
-	for (int i = 255; i >= 0; i++)
-	{
-		random_device r;
-		
+	vector<unsigned char> availableValues(256);
+	//put in the numbers 0-255.
+	for (int i = 0; i < 256; i++) {
+		availableValues[i] = i;
+	}
+	for (int i = 255; i >= 0; i--) {
+		random_device device;
+		uniform_int_distribution<> dist(0,i);
+		int index = dist(device);
+		key[255 - i] = availableValues[index];
+		availableValues.erase(availableValues.begin() + index);
 	}
 	return key;
 }
@@ -54,7 +62,6 @@ void Substitution::read(unsigned char*& p, size_t& l)
 				unsigned char unencrypted = p[i];
 				auto encrypted = key.find(unencrypted);
 				if (encrypted != key.end()) {
-					cout << "encrypting" << endl;
 					p[i] = encrypted->second;
 				}
 			}
